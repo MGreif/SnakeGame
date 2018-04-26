@@ -6,6 +6,7 @@ import java.util.TimerTask;
 import javax.swing.*;
 import javax.swing.JOptionPane;
 public class MainClass implements KeyListener {
+	//Creating all variables
 	public static JFrame frame = new JFrame("Frame");
 	public static JPanel player = new JPanel();
 	public static int playerWidth = 30;
@@ -16,13 +17,15 @@ public class MainClass implements KeyListener {
 	public static java.util.List<Child> childList = new ArrayList<Child>();
 	public static int childs = 0;
 	public static int score = childs;
-	public static byte childsPerScore = 10;
+	public static byte childsPerScore = 1;
 	public static long delayForTimer = 75;
+	public static byte reqForPu = 1;
 	public static char direction;
 	public static int stepSize = playerWidth;
 	public static JPanel food = new JPanel();
 	public static int widthInt = 2000;
 	public static boolean powerupCollected = true;
+	public static boolean powerupActive = false;
 	public static int heightInt = 150;
 	public static int frameWidth = widthInt - (widthInt % playerWidth);
 	public static int[] coords = new int[frameWidth / playerWidth];
@@ -40,19 +43,18 @@ public static void main(String[] args) {
 	createTimer();
 	createGrid();
 	generateFood();
-	System.out.println(frame.getWidth()/playerWidth);
 	new MainClass();
 	
 }
-public static void initPowerUps() {
-	if (childs == 10 && powerupCollected == true) {
-	Powerup pu = new Powerup(coords[rnd.nextInt(((coords.length - 1) - 1) + 1) + 1],coords[rnd.nextInt(((coords.length  - 1 )- 1) + 1) + 1], Color.BLACK);
+/*public static void initPowerUps() {
+	if (childs == reqForPu && powerupActive == false) {
+	Powerup pu = new Powerup(new Point(coords[rnd.nextInt(((coords.length - 1) - 1) + 1) + 1],coords[rnd.nextInt(((coords.length  - 1 )- 1) + 1) + 1]), Color.BLACK);
 	System.out.println("PU SPAWNED");
 	PUList.add(pu);
-	powerupCollected = false;
+	powerupActive = true;
 	frame.repaint();
-	}
-}
+	} 
+}*/
 public static void createTimer() {
 	timer.scheduleAtFixedRate(new TimerTask() {
 		  public void run() {
@@ -65,14 +67,13 @@ public static void createTimer() {
 		  case 'd': player.setLocation(player.getLocation().x + stepSize, player.getLocation().y); break;
 		  }
 		  moveChilds();
-		  initPowerUps();
+		  //initPowerUps();
 		  checkForCollision();
 		  }
 		}, 0 ,delayForTimer);}
 public static void createGrid() {
 	for(int i = 0; i < coords.length ; i++) {
 		coords[i] = i * playerWidth;
-		System.out.println(i);
 	}
 }
 public static void generateFood() {
@@ -80,7 +81,6 @@ public static void generateFood() {
 	food.setSize(playerWidth, playerWidth);
 	food.setLocation(coords[rnd.nextInt(((coords.length - 1) - 1) + 1) + 1],coords[rnd.nextInt(((coords.length  - 1 )- 1) + 1) + 1]);
 	System.out.println(food.getLocation());
-	System.out.println(food.getLocation().toString());
 	frame.add(food);
 }
 public void keyTyped(KeyEvent e) {
@@ -117,7 +117,26 @@ public static void moveChilds() {
 	}
 	}
 }
+/*
+public static void checkForPuCollision() {
+	if (player.getLocation().equals(PUList.get(0).getLocation())) {
+		childsPerScore = 2;
+		PUList.get(0).dispose();
+		PUList.clear();
+		powerupActive = false;
+	}
+	
+}*/
 public static void checkForCollision() {
+
+	/*if (powerupActive) {
+	checkForPuCollision();
+	}*/
+	checkForFoodCollision();
+	checkForWallCollision();
+	checkForSelfCollision();
+}
+public static void checkForFoodCollision() {
 	if (player.getLocation().x == food.getLocation().x && player.getLocation().y == food.getLocation().y) {
 		System.out.println("HIT!");
 		food.setVisible(false);
@@ -126,6 +145,8 @@ public static void checkForCollision() {
 		createChild();
 		childs = childs + childsPerScore;
 	}
+}
+public static void checkForWallCollision() {
 	if (player.getLocation().x <= 0) {
 		player.setLocation(frameWidth, player.getLocation().y);
 	}else if (player.getLocation().x >= frameWidth) {
@@ -135,6 +156,8 @@ public static void checkForCollision() {
 	}else if (player.getLocation().y >= frameHeight) {
 		player.setLocation(player.getLocation().x, 0);
 	}
+}
+public static void checkForSelfCollision() {
 	for (int i = 0; i < childs; i++) {
 		Child[] childArray = childList.toArray(new Child[childs]);
 		if (childArray[i].getLocx() == player.getLocation().x && childArray[i].getLocy() == player.getLocation().y) {
@@ -159,7 +182,7 @@ public void keyReleased(KeyEvent e) {
 	keyPressed = true;
 }
 public static void createFrame() {
-	frame.setSize(frameWidth, frameHeight);
+	frame.setSize(frameWidth + 100, frameHeight);
 	frame.setVisible(true);
 	frame.setLayout(null);
 }
