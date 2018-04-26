@@ -12,6 +12,7 @@ public class Child {
 	public void changeChildLoc(Integer locx,Integer locy) {
 		child.setLocation(locx, locy);
 	}
+	
 	public int getLocx() {
 		return child.getLocation().x;
 	}

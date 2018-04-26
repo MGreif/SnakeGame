@@ -43,6 +43,7 @@ public static void main(String[] args) {
 	createTimer();
 	createGrid();
 	generateFood();
+	
 	new MainClass();
 	
 }
