@@ -1,2 +1,14 @@
 # SnakeGame
-I transformed Lists to arrays because i had no clue that i could pick an Index out of a List :P
+Snake
+
+## Beschreibung
+Ein Klassisches Snake Spiel ohne jegliche graphische schöhnheit
+
+## Verbesserungen
+Ich werde den Code etwas verschönern
+
+## Bilder
+
+![pic1](images/Bild1.PNG)
+
+![pic2](images/Bild2.PNG)
