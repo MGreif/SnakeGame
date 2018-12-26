@@ -1,4 +1,5 @@
 import java.awt.*;
+
 import java.util.*;
 import java.util.Timer;
 import java.awt.event.*;
@@ -46,15 +47,6 @@ public static void main(String[] args) {
 	new MainClass();
 	
 }
-/*public static void initPowerUps() {
-	if (childs == reqForPu && powerupActive == false) {
-	Powerup pu = new Powerup(new Point(coords[rnd.nextInt(((coords.length - 1) - 1) + 1) + 1],coords[rnd.nextInt(((coords.length  - 1 )- 1) + 1) + 1]), Color.BLACK);
-	System.out.println("PU SPAWNED");
-	PUList.add(pu);
-	powerupActive = true;
-	frame.repaint();
-	} 
-}*/
 public static void createTimer() {
 	timer.scheduleAtFixedRate(new TimerTask() {
 		  public void run() {
@@ -67,7 +59,6 @@ public static void createTimer() {
 		  case 'd': player.setLocation(player.getLocation().x + stepSize, player.getLocation().y); break;
 		  }
 		  moveChilds();
-		  //initPowerUps();
 		  checkForCollision();
 		  }
 		}, 0 ,delayForTimer);}
@@ -117,21 +108,7 @@ public static void moveChilds() {
 	}
 	}
 }
-/*
-public static void checkForPuCollision() {
-	if (player.getLocation().equals(PUList.get(0).getLocation())) {
-		childsPerScore = 2;
-		PUList.get(0).dispose();
-		PUList.clear();
-		powerupActive = false;
-	}
-	
-}*/
 public static void checkForCollision() {
-
-	/*if (powerupActive) {
-	checkForPuCollision();
-	}*/
 	checkForFoodCollision();
 	checkForWallCollision();
 	checkForSelfCollision();
@@ -182,7 +159,7 @@ public void keyReleased(KeyEvent e) {
 	keyPressed = true;
 }
 public static void createFrame() {
-	frame.setSize(frameWidth + 100, frameHeight);
+	frame.setSize(frameWidth + 100, frameHeight+ 100);
 	frame.setVisible(true);
 	frame.setLayout(null);
 }
