@@ -1,5 +1,5 @@
 # SnakeGame
-Snake
+Classic Snake
 
 ## Beschreibung
 Ein Klassisches Snake Spiel ohne jegliche graphische schöhnheit
